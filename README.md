@@ -6,14 +6,14 @@ One command → clean, justified .docx.<br>
 No Markdown syntax. No GUI bloat. No distractions.<br>
 Just you, your HTML tags as raw input, and a professional output that actually looks like a serious document.<br>
 
-**Why Retrnote exists**<br>
+**Why retrnote exists**<br>
 Most tools force you to choose:<br>
 - Markdown (extra syntax to learn)<br>
 - Full HTML (too verbose)<br>
 - Pandoc (powerful but you end up writing a novel in YAML templates)<br>
 - GUI word processors (the bloat you ran away from)<br>
 
-**Retrnote is the missing middle ground:**<br>
+**retrnote is the missing middle ground:**<br>
 - You already know `<b>` and `<h1>`.<br>
 - You want justified paragraphs and proper headings without fighting templates.<br>
 - You want `<pre>` blocks that actually show the code, not render it.<br>
