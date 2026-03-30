@@ -28,8 +28,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: dist/retrnote-macos-latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
   build-linux:
     runs-on: ubuntu-latest
@@ -51,8 +49,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: dist/retrnote-linux-latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
   build-windows:
     runs-on: windows-latest
@@ -74,5 +70,3 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: dist/retrnote-windows-latest.exe
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
