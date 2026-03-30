@@ -35,3 +35,11 @@ jobs:
         with:
           name: retrnote-${{ matrix.os }}
           path: dist/retrnote*
+
+      - name: Upload binaries to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/retrnote*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
