@@ -10,7 +10,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from bs4 import BeautifulSoup, NavigableString
 import subprocess
 
-from . import __version__
+from retrnote import __version__
 
 def add_run(container, text, styles, preserve_newlines):
     if preserve_newlines:

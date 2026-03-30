@@ -1,6 +1,6 @@
 [project]
 name = "retrnote"
-version = "0.1.1"
+version = "0.1.2"
 description = "Minimalist retro-inspired HTML tag-based word processor. Distraction free writing.."
 readme = "README.md"
 license = {text = "MIT"}
