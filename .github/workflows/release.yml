@@ -5,49 +5,74 @@ on:
     types: [created]
 
 permissions:
-  contents: write  # optional, PAT is used
+  contents: write  # required for GH actions, PAT used for multi-job upload
 
 jobs:
-  build-and-upload:
+  build-macos:
     runs-on: macos-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: 3.12
 
-      - name: Install dependencies and PyInstaller
+      - name: Install dependencies
         run: pip install . pyinstaller
 
-      # --- Build macOS binary ---
       - name: Build macOS binary
         run: pyinstaller --onefile --name retrnote-macos-latest --strip --clean src/retrnote/cli.py
 
-      # --- Build Linux binary ---
-      - name: Build Linux binary
-        uses: docker://ubuntu:24.04
-        run: |
-          apt-get update && apt-get install -y python3 python3-pip
-          pip3 install . pyinstaller
-          pyinstaller --onefile --name retrnote-linux-latest src/retrnote/cli.py
-
-      # --- Build Windows binary ---
-      - name: Build Windows binary
-        uses: docker://mcr.microsoft.com/windows/servercore:ltsc2022
-        run: |
-          python -m pip install . pyinstaller
-          pyinstaller --onefile --name retrnote-windows-latest src\retrnote\cli.py
-
-      # --- Upload all binaries to GitHub release using PAT ---
-      - name: Upload binaries to release
+      - name: Upload macOS binary to release
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            dist/retrnote-macos-latest
-            dist/retrnote-linux-latest
-            dist/retrnote-windows-latest.exe
+          files: dist/retrnote-macos-latest
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}  # Use PAT to bypass permission errors
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - name: Install dependencies
+        run: pip install . pyinstaller
+
+      - name: Build Linux binary
+        run: pyinstaller --onefile --name retrnote-linux-latest --strip --clean src/retrnote/cli.py
+
+      - name: Upload Linux binary to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/retrnote-linux-latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - name: Install dependencies
+        run: pip install . pyinstaller
+
+      - name: Build Windows binary
+        run: pyinstaller --onefile --name retrnote-windows-latest --clean src\retrnote\cli.py
+
+      - name: Upload Windows binary to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/retrnote-windows-latest.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
