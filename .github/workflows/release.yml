@@ -5,41 +5,74 @@ on:
     types: [created]
 
 jobs:
-  build:
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-
+  build-macos:
+    runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: 3.12
 
-      - name: Install dependencies
-        run: pip install pyinstaller
+      - name: Install dependencies and PyInstaller
+        run: pip install . pyinstaller
 
-      - name: Build executable
-        run: pyinstaller --onefile --name retrnote --strip --clean src/retrnote/cli.py
-        if: matrix.os != 'windows-latest'
+      - name: Build macOS binary
+        run: pyinstaller --onefile --name retrnote-macos-latest --strip --clean src/retrnote/cli.py
 
-      - name: Build Windows executable
-        run: pyinstaller --onefile --name retrnote.exe --clean src/retrnote/cli.py
-        if: matrix.os == 'windows-latest'
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: retrnote-${{ matrix.os }}
-          path: dist/retrnote*
-
-      - name: Upload binaries to release
+      - name: Upload macOS binary to release
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            dist/retrnote*
+          files: dist/retrnote-macos-latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - name: Install dependencies and PyInstaller
+        run: pip install . pyinstaller
+
+      - name: Build Linux binary
+        run: pyinstaller --onefile --name retrnote-linux-latest --strip --clean src/retrnote/cli.py
+
+      - name: Upload Linux binary to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/retrnote-linux-latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - name: Install dependencies and PyInstaller
+        run: pip install . pyinstaller
+
+      - name: Build Windows binary
+        run: pyinstaller --onefile --name retrnote-windows-latest --clean src\retrnote\cli.py
+
+      - name: Upload Windows binary to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/retrnote-windows-latest.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

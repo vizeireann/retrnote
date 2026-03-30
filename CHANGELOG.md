@@ -1,3 +1,7 @@
+## [0.1.1] - 30-March-2026
+
+ - Updated YML file to include per OS build for GitHub Actions.
+
 ## [0.1.0] - 28-March-2026
 
 - Initial release.
