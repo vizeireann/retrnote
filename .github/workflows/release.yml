@@ -5,13 +5,11 @@ on:
     types: [created]
 
 permissions:
-  contents: write  # Needed to attach assets to the release
+  contents: write   # Needed to attach assets to the release
 
 jobs:
   build-macos:
     runs-on: macos-latest
-    outputs:
-      binary_path: ${{ steps.build.outputs.binary }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -25,10 +23,7 @@ jobs:
         run: pip install . pyinstaller
 
       - name: Build macOS binary
-        id: build
-        run: |
-          pyinstaller --onefile --name retrnote-macos-latest --strip --clean src/retrnote/cli.py
-          echo "binary=dist/retrnote-macos-latest" >> $GITHUB_OUTPUT
+        run: pyinstaller --onefile --name retrnote-macos-latest --strip --clean src/retrnote/cli.py
 
       - name: Upload macOS binary to release
         uses: softprops/action-gh-release@v2
@@ -39,7 +34,6 @@ jobs:
 
   build-linux:
     runs-on: ubuntu-latest
-    needs: build-macos
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -55,16 +49,14 @@ jobs:
       - name: Build Linux binary
         run: pyinstaller --onefile --name retrnote-linux-latest --strip --clean src/retrnote/cli.py
 
-      - name: Upload Linux binary to release
-        uses: softprops/action-gh-release@v2
+      - name: Upload Linux artifact
+        uses: actions/upload-artifact@v4
         with:
-          files: dist/retrnote-linux-latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: retrnote-linux
+          path: dist/retrnote-linux-latest
 
   build-windows:
     runs-on: windows-latest
-    needs: build-linux
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -80,9 +72,8 @@ jobs:
       - name: Build Windows binary
         run: pyinstaller --onefile --name retrnote-windows-latest --clean src\retrnote\cli.py
 
-      - name: Upload Windows binary to release
-        uses: softprops/action-gh-release@v2
+      - name: Upload Windows artifact
+        uses: actions/upload-artifact@v4
         with:
-          files: dist/retrnote-windows-latest.exe
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: retrnote-windows
+          path: dist/retrnote-windows-latest.exe
