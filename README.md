@@ -1,9 +1,7 @@
 # **retrnote**<br>
 
 [![PyPI Version](https://img.shields.io/pypi/v/retrnote.svg)](https://pypi.org/project/retrnote/)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/retrnote.svg)](https://pypi.org/project/retrnote/)
-[![Homebrew](https://img.shields.io/badge/Homebrew-Install-blue?logo=homebrew)](https://brew.sh/)
-[![GitHub Actions](https://img.shields.io/github/workflow/status/vizeireann/retrnote/Release%20Binaries?label=Release%20Binaries)](https://github.com/vizeireann/retrnote/actions/workflows/release.yml)
+[![GitHub Actions](https://img.shields.io/github/workflow/status/vizeireann/retrnote/Release%20Binaries?label=Release%20Binaries)](https://github.com/vizeireann/retrnote/releases)
 
 The minimalist HTML tag-to-document tool for serious writers who refuse bloat.<br>
 Neovim (or any editor) + simple HTML tags -> clean .docx<br>
@@ -55,7 +53,7 @@ pip install retrnote
 ```bash
 brew install vizeireann/tools/retrnote
 ```
-### **Download prebuild binaries**
+### **Download prebuilt binaries**
 1. Download the latest binary from the [Releases page](https://github.com/vizeireann/retrnote/releases)
 2. Make the file executable:
    ```bash
@@ -66,5 +64,12 @@ brew install vizeireann/tools/retrnote
 **Typical Workflow**<br>
 Use your favourite text editor to type in your text with inline HTML tags for formatting.<br>
 Execute the `retrnote` utility and get the clean .docx output.<br>
+
+**Example execution commands**<br>
+```bash
+retrnote input_file.txt output_file.docx  #Takes default setting.
+retrnote input_file.txt output_file.docx --font "Georgia" --size "14"    #Change font (font must be installed)
+retrnote input_file.txt output_file.docx --no-justify     #Left align all paragraphs, by default paragraphs are justified.
+```
 
 *This is WordStar reborn — but it works with VS Code, Neovim, Sublime, or even TextEdit. The editor is yours.*
