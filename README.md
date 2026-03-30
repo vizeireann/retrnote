@@ -1,4 +1,10 @@
-**retrnote**<br>
+# **retrnote**<br>
+
+[![PyPI Version](https://img.shields.io/pypi/v/retrnote.svg)](https://pypi.org/project/retrnote/)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/retrnote.svg)](https://pypi.org/project/retrnote/)
+[![Homebrew](https://img.shields.io/badge/Homebrew-Install-blue?logo=homebrew)](https://brew.sh/)
+[![GitHub Actions](https://img.shields.io/github/workflow/status/vizeireann/retrnote/Release%20Binaries?label=Release%20Binaries)](https://github.com/vizeireann/retrnote/actions/workflows/release.yml)
+
 The minimalist HTML tag-to-document tool for serious writers who refuse bloat.<br>
 Neovim (or any editor) + simple HTML tags -> clean .docx<br>
 Inspired by Wordstar and George R.R. Martin's focused workflow.<br>
@@ -37,6 +43,25 @@ Refer to the `examples/` directory for more examples.<br>
 - Tables<br>
 - Image insertion<br>
 - Granular font type changes within the body.<br>
+
+## Installation
+
+### **Using pip (PyPI)**
+```bash
+pip install retrnote
+```
+
+### **Using Homebrew (macOS)**
+```bash
+brew install vizeireann/tools/retrnote
+```
+### **Download prebuild binaries**
+1. Download the latest binary from the [Releases page](https://github.com/vizeireann/retrnote/releases)
+2. Make the file executable:
+   ```bash
+   chmod +x <whatever you installed for your system>
+   ./<binary name> --help
+   ```
 
 **Typical Workflow**<br>
 Use your favourite text editor to type in your text with inline HTML tags for formatting.<br>
