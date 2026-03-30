@@ -1,5 +1,9 @@
 name: Release Binaries
 
+# Give the workflow permission to update releases and upload assets
+permissions:
+  contents: write
+
 on:
   release:
     types: [created]
